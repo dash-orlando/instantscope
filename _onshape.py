@@ -24,9 +24,11 @@ def exportScope( length, height ):
     cmd = 'stl?'
 
     # configuration parameters
-    #length = length
-    #height = height
-
+    
+    length = length/1000 #conversion to meters
+    height = height/1000 #
+    print( length, height )
+    
     # execute link
     print( 'https://cad.onshape.com/api/partstudios/d/{}/w/{}/e/{}/{}configuration=length={}+meter;height={}+meter'.format(did,wid,eid,cmd,length,height) )
-    webbrowser.open('https://cad.onshape.com/api/partstudios/d/{}/w/{}/e/{}/{}'.format(did,wid,eid,cmd))  # Go to example.com
+    webbrowser.open( 'https://cad.onshape.com/api/partstudios/d/{}/w/{}/e/{}/{}configuration=length={}+meter;height={}+meter'.format(did,wid,eid,cmd,length,height) )  # Go to example.com
