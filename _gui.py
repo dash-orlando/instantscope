@@ -13,6 +13,10 @@ Fluvio L Lobo Fenoglietto
 # import tkinter module
 import tkinter as tk
 
+# import internal modules
+import  _instantscope    as _is
+import  _gspread         as _gs
+
 # define tkinter object
 root= tk.Tk()
 
@@ -39,13 +43,16 @@ canvas1.create_window(250, 150, window=entry2)
 canvas1.create_window(250, 200, window=entry3)
 canvas1.create_window(250, 250, window=entry4)
 
-def passData ():  
-    gender  = entry1.get()
-    age     = entry2.get()
-    weight  = entry3.get()
-    height  = entry4.get()
+def passData ():
+    PatientData = []
+    PatientData.append( entry1.get() )  #gender
+    PatientData.append( entry2.get() )  #age
+    PatientData.append( entry3.get() )  #weight
+    PatientData.append( entry4.get() )  #height
 
-    print( gender, age, weight, height )
+    # do things
+    length, height = _is.detScopeDimensions( PatientData )
+    
     
     
 button1     = tk.Button(text='Enter', command=passData)

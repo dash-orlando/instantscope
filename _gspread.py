@@ -6,18 +6,23 @@ Madelene Habib
 Fluvio L Lobo Fenoglietto
 '''
 
+# import modules
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
+# functions
+def setupClient():
+    scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('users.json', scope)
+    client = gspread.authorize(creds)
+    return client
 
-# Creation of gspread client
-scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('users.json', scope)
-client = gspread.authorize(creds)
+def getColumnValues(client, filename, column):
+    sheet = client.open( filename ).sheet1
+    values = sheet.col_values( column )
+    return values
 
-
-sheet = client.open('Correlations_App').sheet1
-
-
-values = sheet.row_values(2)
-print(values)
+def getRowValues(client, filename, row):
+    sheet = client.open( filename ).sheet1
+    values = sheet.row_values( row )
+    return values
