@@ -59,6 +59,8 @@ def detScopeDimensions( PatientData ):
 
     print( m_l, b_l, m_h, b_h )
 
+    # here we need to handle the lack of values in the input...  i.e. missing the weight of the patient...
+    
     # calculate length and height
     length = m_l*float(PatientData[max_corr_l_index + 1]) + b_l
     height = m_h*float(PatientData[max_corr_h_index + 1]) + b_h

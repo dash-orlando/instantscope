@@ -27,8 +27,7 @@ def exportScope( length, height ):
     
     length = length/1000 #conversion to meters
     height = height/1000 #
-    print( length, height )
+    #print( length, height )
     
     # execute link
-    print( 'https://cad.onshape.com/api/partstudios/d/{}/w/{}/e/{}/{}configuration=length={}+meter;height={}+meter'.format(did,wid,eid,cmd,length,height) )
     webbrowser.open( 'https://cad.onshape.com/api/partstudios/d/{}/w/{}/e/{}/{}configuration=length={}+meter;height={}+meter'.format(did,wid,eid,cmd,length,height) )  # Go to example.com
