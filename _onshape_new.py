@@ -19,6 +19,10 @@ client = Client( config_filename ) # create client
 print( 'https://cad.onshape.com/documents/{}/w/{}/e/{}'.format(did,wid,eid) )
 element = OnshapeElement('https://cad.onshape.com/documents/{}/w/{}/e/{}'.format(did,wid,eid)) # create onshape element
 
+
+response = client.api_client.request('GET','/api/partstudios/d/{}/w/{}/e/{}/stl'.format(did,wid,eid))
+
+
 print( element.did, element.wvm, element.wvmid, element.eid )
 
 
@@ -27,7 +31,6 @@ response = client.part_studios_api.export_stl1(element.did,
                                     element.wvmid,
                                     element.eid,
                                     _preload_content=True)
-
 
 
 
