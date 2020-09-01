@@ -1,5 +1,5 @@
 prod_api_keys:
-  base_url: "https://cad.onshape.com/"
+  base_url: "https://cad.onshape.com"
   secret_key: CJ1MZi2mdI6hyYyr29JXE5FdkMbKfR6JQryR66DL4r6Z7HiV
   access_key: eSTHTCURZ3DEWUhuubalV3IS
 default_stack: prod_api_keys

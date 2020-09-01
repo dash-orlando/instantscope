@@ -17,9 +17,10 @@ eid = '3340d6f3b50b6e32e22d9a3b'
 
 
 # do things
-client = Client( config_filename )
+client = Client() # keys_file=/path/to/file
+element = OnshapeElement('https://cad.onshape.com/documents/{}/w/{}/e/{}'.format(did,wid,eid)) # create onshape element
+response = client.part_studios_api.export_stl1(did, 'w', wid, eid, _preload_content=False)
 
-response = requests.get(    'https://cad.onshape.com/api/partstudios/d/{}/w/{}/e/{}/stl'.format(did,wid,eid),
-                            params=client.configuration.api_key )
+## for configuration
 
-print(response.url)
+# configuration=height%3D0.005%2Bmeter%3Blength%3D0.007%2Bmeter ## text for 
