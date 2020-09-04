@@ -6,7 +6,8 @@ Madelene Habib
 Fluvio L Lobo Fenoglietto
 '''
 
-# import modules
+# Import Modules and Libraries
+# ----------------------------------------------------------- #
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -38,7 +39,7 @@ def getColumnValues(client, filename, column):
 
 def getRowValues(client, filename, row):
     '''
-        getColumnValues()
+        getRowValues()
         - Retrieves all values in a given row
     '''
     sheet = client.open( filename ).sheet1
