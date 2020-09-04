@@ -9,19 +9,27 @@ Fluvio L Lobo Fenoglietto
 '''
 
 # import modules
-#import _gui
 import _gspread as _gs
+import _onshape as _on
 
+# variables
+config_file = '.onshape_client_config.yaml'                                                     # configuration file
+document_url = 'https://cad.onshape.com/documents/4106f8fea9cf4607edeba1db/w/c11cf0ae6ab5e6297d09562d/e/3340d6f3b50b6e32e22d9a3b'
 
-
-# functions
+# Functions
+# ----------------------------------------------------------- #
 
 def getPatientData( PatientData ):
     print( PatientData )
 
+# ----------------------------------------------------------- #
 
 def detScopeDimensions( PatientData ):
 
+    '''
+        detPatientData();
+        - Determine the patient-specific data needed to build the laryngoscope
+    '''
     #
     ## WARNING: The current version of this program
     ## requires that all of the patient information
@@ -62,10 +70,27 @@ def detScopeDimensions( PatientData ):
     # here we need to handle the lack of values in the input...  i.e. missing the weight of the patient...
     
     # calculate length and height
-    length = m_l*float(PatientData[max_corr_l_index + 1]) + b_l
-    height = m_h*float(PatientData[max_corr_h_index + 1]) + b_h
+    length = ( m_l*float(PatientData[max_corr_l_index + 1]) + b_l )/1000
+    height = ( m_h*float(PatientData[max_corr_h_index + 1]) + b_h )/1000
 
-    print(length, height)
+    print( length, height )
 
     return length, height
     
+# ----------------------------------------------------------- #
+
+def generateScope( length, height ):
+
+    '''
+        genScope()
+        - Uses the Onshape API functions to;
+        -- Modify the configuration parameters of a base PartStudio
+        -- Export modified PartStudio as an .STL file
+    '''
+
+    client                  = _on.openClient( config_file )
+    element                 = _on.createOnshapeElement( document_url )
+    configuration_string    = _on.generateConfigurationString( height, length )
+    response                = _on.exportPart( client, element, configuration_string )
+
+    return client, element, configuration_string, response

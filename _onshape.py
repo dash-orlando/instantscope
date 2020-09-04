@@ -11,26 +11,75 @@ Fluvio L. Lobo Fenoglietto
 09/02/2020
 '''
 
-# modules
+# Modules and Libraries
+# ----------------------------------------------------------- #
 from onshape_client import OnshapeElement, Client
 
-# variables
+# Default Variables
+# ----------------------------------------------------------- #
 config_file = '.onshape_client_config.yaml'                                                     # configuration file
-did = '4106f8fea9cf4607edeba1db'                                                                # did
-wid = 'c11cf0ae6ab5e6297d09562d'                                                                # wid
-eid = '3340d6f3b50b6e32e22d9a3b'                                                                # eid... alternatively, copy entire link directly on the OnshapeElement() function
-length = 0.007                                                                                  # configuration param 1, in meters
-height = 0.005                                                                                  # configuration param 2, in meters
+document_url = 'https://cad.onshape.com/documents/4106f8fea9cf4607edeba1db/w/c11cf0ae6ab5e6297d09562d/e/3340d6f3b50b6e32e22d9a3b'
 
-# do things
-client = Client( keys_file=config_file )                                                        # create client using the specified configuration file
-element = OnshapeElement('https://cad.onshape.com/documents/{}/w/{}/e/{}'.format(did,wid,eid))  # create onshape element
-response = client.part_studios_api.export_stl1(did, 'w', wid, eid, _preload_content=False)
+# Functions
+# ----------------------------------------------------------- #
 
-## for configuration
+def openClient( config_file ):
+    '''
+        openClient();
+        - Create/Open Onshape API Client
+        - Requires the file path to the config YAML file with API KEYS
+    '''
+    client = Client( keys_file=config_file )
+    return client
 
-# configuration=height%3D0.005%2Bmeter%3Blength%3D0.007%2Bmeter ## text for 
-with open( '{}.stl'.format(element.name), 'wb' ) as file:
-    file.write(response.data)
-file.close()
+# ----------------------------------------------------------- #
+
+def createOnshapeElement( document_url ):
+    '''
+        createOnshapeElement();
+        - Creates Onshape Element from document URL
+    '''
+    element = OnshapeElement( document_url )
+    print( 'Created Onshape Element from {}'.format( element.name ) )
+    return element
+
+# ----------------------------------------------------------- #
+
+def generateConfigurationString( height, length ):
+    '''
+        generateConfigurationString();
+        - Generates proper string to modify configuration parameters
+
+        * In the future, this function should be deprecated for 
+    '''
+    configuration_string = 'configuration=height%3D{}%2Bmeter%3Blength%3D{}%2Bmeter'.format( height, length )
+    print( 'Generated configuration string {}'.format( configuration_string ) )
+    return configuration_string
+
+# ----------------------------------------------------------- #
+
+def exportPart( client, element, configuration_string ):
+    '''
+        exportPart();
+        - Exports workspace Part as an STL using the variables Onshape Element and 'configuration_string'
+    '''
+    did = element.did
+    wvm = element.wvm
+    wid = element.wvmid
+    eid = element.eid
+    response = client.part_studios_api.export_stl1(did, wvm, wid, eid, _preload_content=False, configuration=configuration_string )
+
+    if response.status == 200:
+        print( 'Request Successful, Response = {}'.format( response.status ) )
+
+        print( 'Writing part file as {}.STL (binary)'.format( element.name ) )
+        with open( '{}.stl'.format( element.name ), 'wb' ) as file:
+            file.write( response.data )
+        file.close()
+        
+    else:
+        print( 'ERROR: Response = {}'.format( response.status ) )
+
+    return response
+
 

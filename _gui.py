@@ -24,7 +24,6 @@ root= tk.Tk()
 canvas1 = tk.Canvas(root, width = 400, height = 350)
 canvas1.pack()
 
-
 title   = tk.Label(root, text='Patient Information')
 label1  = tk.Label(root, text='Gender (M/F)')
 label2  = tk.Label(root, text='Age (mo.)')
@@ -53,7 +52,7 @@ def passData ():
 
     # do things
     length, height = _is.detScopeDimensions( PatientData )
-    _on.exportScope( length, height )
+    client, element, configuration_string, response = _is.generateScope( length, height )
     
     
 button1     = tk.Button(text='Enter', command=passData)
