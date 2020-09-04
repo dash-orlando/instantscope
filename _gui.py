@@ -51,7 +51,13 @@ def passData ():
     PatientData.append( entry4.get() )  #height
 
     # do things
+    print( '' )
+    print( 'Calculate Blade Dimensions from Patient Database' )
+    print( '================================================' )
     length, height = _is.detScopeDimensions( PatientData )
+    print( '' )
+    print( 'Generating 3D Blade Model' )
+    print( '================================================' )
     client, element, configuration_string, response = _is.generateScope( length, height )
     
     

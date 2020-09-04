@@ -14,6 +14,8 @@ Fluvio L. Lobo Fenoglietto
 # Modules and Libraries
 # ----------------------------------------------------------- #
 from onshape_client import OnshapeElement, Client
+import warnings
+warnings.filterwarnings("ignore")
 
 # Default Variables
 # ----------------------------------------------------------- #
@@ -30,6 +32,7 @@ def openClient( config_file ):
         - Requires the file path to the config YAML file with API KEYS
     '''
     client = Client( keys_file=config_file )
+    print( 'Created Onshape Client' )
     return client
 
 # ----------------------------------------------------------- #
@@ -40,7 +43,7 @@ def createOnshapeElement( document_url ):
         - Creates Onshape Element from document URL
     '''
     element = OnshapeElement( document_url )
-    print( 'Created Onshape Element from {}'.format( element.name ) )
+    print( "Created Onshape Element from '{}'".format( element.name ) )
     return element
 
 # ----------------------------------------------------------- #
@@ -69,6 +72,7 @@ def exportPart( client, element, configuration_string ):
     eid = element.eid
     response = client.part_studios_api.export_stl1(did, wvm, wid, eid, _preload_content=False, configuration=configuration_string )
 
+    print( 'Attempting to Export STL of 3D Blade' )
     if response.status == 200:
         print( 'Request Successful, Response = {}'.format( response.status ) )
 
