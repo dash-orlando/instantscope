@@ -15,8 +15,8 @@ import tkinter as tk
 
 # import internal modules
 import  _instantscope    as _is
-import  _gspread         as _gs
-import  _onshape         as _on
+#import  _gspread         as _gs
+#import  _onshape         as _on
 
 # define tkinter object
 root= tk.Tk()
