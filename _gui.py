@@ -18,8 +18,20 @@ import  _instantscope    as _is
 #import  _gspread         as _gs
 #import  _onshape         as _on
 
+#####
+import subprocess as sub
+p = sub.Popen('./_gui',stdout=sub.PIPE,stderr=sub.PIPE)
+output, errors = p.communicate()
+#####
+
 # define tkinter object
 root= tk.Tk()
+
+#####
+text = tk.Text(root)
+text.pack()
+text.insert(END, output)
+#####
 
 canvas1 = tk.Canvas(root, width = 400, height = 350)
 canvas1.pack()
